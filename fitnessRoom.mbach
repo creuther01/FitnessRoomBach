@@ -1,0 +1,38 @@
+scene fitnessScene = {
+    size = (1348,980).
+    layers = { top }.
+    background = loadImage(Images/basicFrit.jpg).
+    machine_one_img = loadImage(Images/machine1.png).
+    machine_two_img = loadImage(Images/machine2.png).
+    machine_three_img = loadImage(Images/machine3.png).
+
+    widget machine_one = {
+       display = { machine_one_img }
+       init = { wdL = top.
+       
+        }
+    }
+
+    widget machine_two = {
+       display = { machine_two_img }
+       init = { wdL = top.
+       
+        }
+    }
+
+    widget machine_three = {
+       display = { machine_three_img }
+       init = { wdL = top.
+       
+        }
+    }
+}.
+
+proc InitScene = draw_scene(fitnessScene);
+                place_at(machine_one,fitnessScene,1100,400);
+                place_at(machine_two,fitnessScene,900,400);
+                place_at(machine_three,fitnessScene,700,400).
+
+    MOProc =  show(machine_one,fitnessScene);
+                show(machine_two,fitnessScene);
+                show(machine_three,fitnessScene).
