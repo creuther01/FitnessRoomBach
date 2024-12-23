@@ -68,6 +68,28 @@ proc InitScene = draw_scene(fitnessScene);
             get(q3);place_at(perso_one,fitnessScene,queue(3),500);
             get(q2);place_at(perso_one,fitnessScene,queue(2),500);tell(q3);
             get(q1);place_at(perso_one,fitnessScene,queue(1),500);tell(q2);
-            ((get(m1);place_at(perso_one,fitnessScene,machine(1),360);tell(q1);place_at(perso_one,fitnessScene,50,500);tell(m1);PersoOneProc)+
-            (get(m2);place_at(perso_one,fitnessScene,machine(2),360);tell(q1);place_at(perso_one,fitnessScene,50,500);tell(m2);PersoOneProc)+
-            (get(m3);place_at(perso_two,fitnessScene,machine(3),360);tell(q1);place_at(perso_one,fitnessScene,50,500);tell(m3);PersoOneProc)).
+            ((get(m1);place_at(perso_one,fitnessScene,machine(1),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m1);PersoOneProc)+
+            (get(m2);place_at(perso_one,fitnessScene,machine(2),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m2);PersoOneProc)+
+            (get(m3);place_at(perso_one,fitnessScene,machine(3),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m3);PersoOneProc)).
+
+    PersoTwoProc =
+        get(q3); place_at(perso_two, fitnessScene, queue(3), 500);
+        get(q2); place_at(perso_two, fitnessScene, queue(2), 500); tell(q3);
+        get(q1); place_at(perso_two, fitnessScene, queue(1), 500); tell(q2);
+        (
+            (get(m1); place_at(perso_two, fitnessScene, machine(1), 360); tell(q1); place_at(perso_two, fitnessScene, 75, 500); tell(m1); PersoTwoProc) +
+            (get(m2); place_at(perso_two, fitnessScene, machine(2), 360); tell(q1); place_at(perso_two, fitnessScene, 75, 500); tell(m2); PersoTwoProc) +
+            (get(m3); place_at(perso_two, fitnessScene, machine(3), 360); tell(q1); place_at(perso_two, fitnessScene, 75, 500); tell(m3); PersoTwoProc)
+        ).
+
+    PersoThreeProc =
+        get(q3); place_at(perso_three, fitnessScene, queue(3), 500);
+        get(q2); place_at(perso_three, fitnessScene, queue(2), 500); tell(q3);
+        get(q1); place_at(perso_three, fitnessScene, queue(1), 500); tell(q2);
+        (
+            (get(m1); place_at(perso_three, fitnessScene, machine(1), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m1); PersoThreeProc) +
+            (get(m2); place_at(perso_three, fitnessScene, machine(2), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m2); PersoThreeProc) +
+            (get(m3); place_at(perso_three, fitnessScene, machine(3), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m3); PersoThreeProc)
+        ).
+
+    AllPersoProc = (PersoOneProc || PersoTwoProc ||PersoThreeProc ).
