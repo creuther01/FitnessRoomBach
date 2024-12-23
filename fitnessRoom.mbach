@@ -5,34 +5,53 @@ scene fitnessScene = {
     machine_one_img = loadImage(Images/machine1.png).
     machine_two_img = loadImage(Images/machine2.png).
     machine_three_img = loadImage(Images/machine3.png).
+    perso_one_img = loadImage(Images/perso1.png).
+    perso_two_img = loadImage(Images/perso2.png).
+    perso_three_img = loadImage(Images/perso3.png).
 
     widget machine_one = {
        display = { machine_one_img }
-       init = { wdL = top.
-       
-        }
+       init = { wdL = top.}
     }
 
     widget machine_two = {
        display = { machine_two_img }
-       init = { wdL = top.
-       
-        }
+       init = { wdL = top.}
     }
 
     widget machine_three = {
        display = { machine_three_img }
-       init = { wdL = top.
-       
-        }
+       init = { wdL = top.}
+    }
+
+    widget perso_one = {
+        display = { perso_one_img }
+       init = { wdL = top.}
+    }
+
+    widget perso_two = {
+        display = { perso_two_img }
+       init = { wdL = top.}
+    }
+
+    widget perso_three = {
+        display = { perso_three_img }
+       init = { wdL = top.}
     }
 }.
 
 proc InitScene = draw_scene(fitnessScene);
-                place_at(machine_one,fitnessScene,1100,400);
-                place_at(machine_two,fitnessScene,900,400);
-                place_at(machine_three,fitnessScene,700,400).
+                place_at(machine_one,fitnessScene,1100,360);
+                place_at(machine_two,fitnessScene,900,360);
+                place_at(machine_three,fitnessScene,700,360);
+                place_at(perso_one,fitnessScene,450,500);
+                place_at(perso_two,fitnessScene,300,500);
+                place_at(perso_three,fitnessScene,150,500).
+
 
     MOProc =  show(machine_one,fitnessScene);
                 show(machine_two,fitnessScene);
-                show(machine_three,fitnessScene).
+                show(machine_three,fitnessScene);
+                show(perso_three,fitnessScene);
+                show(perso_two,fitnessScene);
+                show(perso_one,fitnessScene).
