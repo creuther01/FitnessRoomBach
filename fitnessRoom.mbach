@@ -1,3 +1,7 @@
+eqn queue(1)=450. queue(2)=300. queue(3) = 150.
+    machine(1)=1100.machine(2)=900.machine(3)=700.
+
+
 scene fitnessScene = {
     size = (1348,980).
     layers = { top }.
@@ -41,17 +45,29 @@ scene fitnessScene = {
 }.
 
 proc InitScene = draw_scene(fitnessScene);
-                place_at(machine_one,fitnessScene,1100,360);
-                place_at(machine_two,fitnessScene,900,360);
-                place_at(machine_three,fitnessScene,700,360);
-                place_at(perso_one,fitnessScene,450,500);
-                place_at(perso_two,fitnessScene,300,500);
-                place_at(perso_three,fitnessScene,150,500).
 
-
-    MOProc =  show(machine_one,fitnessScene);
+                place_at(machine_one,fitnessScene,machine(1),360);
+                place_at(machine_two,fitnessScene,machine(2),360);
+                place_at(machine_three,fitnessScene,machine(3),360);
+                show(machine_one,fitnessScene);
                 show(machine_two,fitnessScene);
                 show(machine_three,fitnessScene);
+                tell(m1);tell(m2);tell(m3);
+                tell(q1);tell(q2);tell(q3);
+
+                place_at(perso_three,fitnessScene,50,500);
+                place_at(perso_two,fitnessScene,75,500);
+                place_at(perso_one,fitnessScene,100,500);
                 show(perso_three,fitnessScene);
                 show(perso_two,fitnessScene);
                 show(perso_one,fitnessScene).
+                
+
+
+    PersoOneProc=
+            get(q3);place_at(perso_one,fitnessScene,queue(3),500);
+            get(q2);place_at(perso_one,fitnessScene,queue(2),500);tell(q3);
+            get(q1);place_at(perso_one,fitnessScene,queue(1),500);tell(q2);
+            ((get(m1);place_at(perso_one,fitnessScene,machine(1),360);tell(q1);place_at(perso_one,fitnessScene,50,500);tell(m1);PersoOneProc)+
+            (get(m2);place_at(perso_one,fitnessScene,machine(2),360);tell(q1);place_at(perso_one,fitnessScene,50,500);tell(m2);PersoOneProc)+
+            (get(m3);place_at(perso_two,fitnessScene,machine(3),360);tell(q1);place_at(perso_one,fitnessScene,50,500);tell(m3);PersoOneProc)).
