@@ -77,9 +77,9 @@ proc InitScene = draw_scene(fitnessScene);
         get(q2); place_at(perso_two, fitnessScene, queue(2), 500); tell(q3);
         get(q1); place_at(perso_two, fitnessScene, queue(1), 500); tell(q2);
         (
-            (get(m1); place_at(perso_two, fitnessScene, machine(1), 360); tell(q1); place_at(perso_two, fitnessScene, 75, 500); tell(m1); PersoTwoProc) +
-            (get(m2); place_at(perso_two, fitnessScene, machine(2), 360); tell(q1); place_at(perso_two, fitnessScene, 75, 500); tell(m2); PersoTwoProc) +
-            (get(m3); place_at(perso_two, fitnessScene, machine(3), 360); tell(q1); place_at(perso_two, fitnessScene, 75, 500); tell(m3); PersoTwoProc)
+            (get(m1); move_to(perso_two, fitnessScene, machine(1), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m1); PersoTwoProc) +
+            (get(m2); move_to(perso_two, fitnessScene, machine(2), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m2); PersoTwoProc) +
+            (get(m3); move_to(perso_two, fitnessScene, machine(3), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m3); PersoTwoProc)
         ).
 
     PersoThreeProc =
