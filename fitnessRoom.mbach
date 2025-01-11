@@ -191,6 +191,20 @@ proc Place_machine(n:MachineNumber) =
 
 
 
+	AllSeance = (Seance1 || Seance2 || Seance3).
+
+	Seance1 = ComposeSeance(1,1); ComposeSeance(2,1); tell(out).
+	Seance2 = ComposeSeance(1,2); ComposeSeance(3,2); tell(out).
+	Seance3 = ComposeSeance(3,3); tell(out).
+
+	ComposeSeance(m:MachineNumber,n:CharacterNumber)=
+		nask(m); nask(n);
+		ReserveMachine(m,n);
+		LibereMachine(m,n).
+
+
+
+
 
     PersoOneProc=
             get(q3);place_at(perso_one,fitnessScene,queue(3),500);
