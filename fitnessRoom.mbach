@@ -376,37 +376,3 @@ proc Place_machine(n:MachineNumber) =
 		nask(m); nask(n);
 		UseMachine(m,n);
 		FreeMachine(m,n).
-
-
-
-
-
-    PersoOneProc=
-            get(q3);place_at(perso_one,fitnessScene,queueX(3),500);
-            get(q2);place_at(perso_one,fitnessScene,queueX(2),500);tell(q3);
-            get(q1);place_at(perso_one,fitnessScene,queueX(1),500);tell(q2);
-            ((get(m1);place_at(perso_one,fitnessScene,machineX(1),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m1);PersoOneProc)+
-            (get(m2);place_at(perso_one,fitnessScene,machineX(2),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m2);PersoOneProc)+
-            (get(m3);place_at(perso_one,fitnessScene,machineX(3),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m3);PersoOneProc)).
-
-    PersoTwoProc =
-        get(q3); place_at(perso_two, fitnessScene, queueX(3), 500);
-        get(q2); place_at(perso_two, fitnessScene, queueX(2), 500); tell(q3);
-        get(q1); place_at(perso_two, fitnessScene, queueX(1), 500); tell(q2);
-        (
-            (get(m1); move_to(perso_two, fitnessScene, machineX(1), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m1); PersoTwoProc) +
-            (get(m2); move_to(perso_two, fitnessScene, machineX(2), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m2); PersoTwoProc) +
-            (get(m3); move_to(perso_two, fitnessScene, machineX(3), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m3); PersoTwoProc)
-        ).
-
-    PersoThreeProc =
-        get(q3); place_at(perso_three, fitnessScene, queueX(3), 500);
-        get(q2); place_at(perso_three, fitnessScene, queueX(2), 500); tell(q3);
-        get(q1); place_at(perso_three, fitnessScene, queueX(1), 500); tell(q2);
-        (
-            (get(m1); place_at(perso_three, fitnessScene, machineX(1), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m1); PersoThreeProc) +
-            (get(m2); place_at(perso_three, fitnessScene, machineX(2), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m2); PersoThreeProc) +
-            (get(m3); place_at(perso_three, fitnessScene, machineX(3), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m3); PersoThreeProc)
-        ).
-
-    AllPersoProc = (PersoOneProc || PersoTwoProc ||PersoThreeProc ).
