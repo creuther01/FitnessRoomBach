@@ -1,10 +1,11 @@
 eset CharacterNumber = { 1,2,3,4,5 }.
      MachineNumber = { 1,2,3 }.
-     Queue = { q1_0, q1_1, q2_0, q2_1, q3_0, q3_1 }.
-     QueueCharacter = { q1char1, q1char2, q1char3, q2char1, q2char2, q2char3, q3char1, q3char2, q3char3 }.
-	 
-eqn queue(1)=1050. queue(2)=850. queue(3) = 650.
-    machine(1)=1100.machine(2)=900.machine(3)=700.
+     Queue = { q1_1, q1_2, q1_3, q2_1, q2_2, q2_3, q3_1, q3_2, q3_3 }.
+     MachineCharacter = { m1char1, m1char2, m1char3, m2char1, m2char2, m2char3, m3char1, m3char2, m3char3 }.
+
+eqn queueX(1)=1050. queueX(2)=850. queueX(3) = 650.
+    machineX(1)=1100. machineX(2)=900.machineX(3)=700.
+    machineY=360. queueY=550.
 	character(1)=100. 	character(2)=75. 	character(3)=50.
 
 scene fitnessScene = {
@@ -14,9 +15,9 @@ scene fitnessScene = {
     machine_one_img = loadImage(Images/machine1.png).
     machine_two_img = loadImage(Images/machine2.png).
     machine_three_img = loadImage(Images/machine3.png).
-    perso_one_img = loadImage(Images/perso1.png).
-    perso_two_img = loadImage(Images/perso2.png).
-    perso_three_img = loadImage(Images/perso3.png).
+    perso_one_img = loadImage(Images/Perso1.png).
+    perso_two_img = loadImage(Images/Perso2.png).
+    perso_three_img = loadImage(Images/Perso3.png).
 
     widget machine_one = {
        display = { machine_one_img }
@@ -50,15 +51,15 @@ scene fitnessScene = {
 }.
 
 proc Place_machine(n:MachineNumber) =
-        ( (n=1) -> (place_at(machine_one,fitnessScene,machine(1),360);
+        ( (n=1) -> (place_at(machine_one,fitnessScene,machineX(1),machineY);
                     show(machine_one,fitnessScene);
                     tell(m1) ))
         +
-        ( (n=2) -> (place_at(machine_two,fitnessScene,machine(2),360);
+        ( (n=2) -> (place_at(machine_two,fitnessScene,machineX(2),machineY);
                     show(machine_two,fitnessScene);
                     tell(m2) ))
         +
-        ( (n=3) -> (place_at(machine_three,fitnessScene,machine(3),360);
+        ( (n=3) -> (place_at(machine_three,fitnessScene,machineX(3),machineY);
                     show(machine_three,fitnessScene);
                     tell(m3) )).
 
@@ -75,115 +76,289 @@ proc Place_machine(n:MachineNumber) =
                     show(perso_three,fitnessScene);
 					tell(n3) )).
 
-	ReserveMachine(m:MachineNumber,n:CharacterNumber)=
+    CheckQueue(m:MachineNumber)=
+        ( (m=1) -> nask(q1_1);nask(q1_2);nask(q1_3))
+        +
+        ( (m=2) -> nask(q2_1);nask(q2_2);nask(q2_3))
+        +
+        ( (m=3) -> nask(q3_1);nask(q3_2);nask(q3_3)).
+
+    CheckReservation(m:MachineNumber,n:CharacterNumber)=
+        ( (m=1) ->
+            (n=1 -> ask(q1_1)
+            +
+            n=2 -> ask(q1_2)
+            +
+            n=3 -> ask(q1_3) ))
+        +
+        ( (m=2) ->
+            (n=1 -> ask(q2_1)
+            +
+            n=2 -> ask(q2_2)
+            +
+            n=3 -> ask(q2_3) ))
+        +
+        ( (m=3) ->
+            (n=1 -> ask(q3_1)
+            +
+            n=2 -> ask(q3_2)
+            +
+            n=3 -> ask(q3_3) )).
+
+    UpdateQueue(m:MachineNumber,n:CharacterNumber)=
+        ( (m=1) ->
+            (n=1 -> get(q1_1)
+            +
+            n=2 -> get(q1_2)
+            +
+            n=3 -> get(q1_3) )
+            )
+        +
+        ( (m=2) ->
+            (n=1 -> get(q2_1)
+            +
+            n=2 -> get(q2_2)
+            +
+            n=3 -> get(q2_3) )
+            )
+        +
+        ( (m=3) ->
+            (n=1 -> get(q3_1)
+            +
+            n=2 -> get(q3_2)
+            +
+            n=3 -> get(q3_3) )
+            ).
+
+    ReserveQueue(n:CharacterNumber)=
+        ( (n=1) -> tell(q1_1))
+        +
+        ( (n=2) -> tell(q1_2))
+        +
+        ( (n=3) -> tell(q1_3)).
+
+    ReserveMachine(m:MachineNumber,n:CharacterNumber)=
+        ( (m=1 & n=1) ->
+            CheckQueue(1);
+            ReserveQueue(n))
+        +
+        ( (m=1 & n=2) ->
+            CheckQueue(1);
+            ReserveQueue(n))
+        +
+        ( (m=1 & n=3) ->
+            CheckQueue(1);
+            ReserveQueue(n))
+        +
+        ( (m=2 & n=1) ->
+            CheckQueue(2);
+            ReserveQueue(n))
+        +
+        ( (m=2 & n=2) ->
+            CheckQueue(2);
+            ReserveQueue(n))
+        +
+        ( (m=2 & n=3) ->
+            CheckQueue(2);
+            ReserveQueue(n))
+        +
+        ( (m=3 & n=1) ->
+            CheckQueue(3);
+            ReserveQueue(n))
+        +
+        ( (m=3 & n=2) ->
+            CheckQueue(3);
+            ReserveQueue(n))
+        +
+        ( (m=3 & n=3) ->
+            CheckQueue(3);
+            ReserveQueue(n)).
+
+
+    GoToQueue(n:CharacterNumber, m:MachineNumber)=
+        ( (n=1) ->
+            ((m=1) ->
+                CheckReservation(1,1);
+                move_to(perso_one,fitnessScene,queueX(1),queueY)
+            +
+            (m=2) ->
+                CheckReservation(2,1);
+                move_to(perso_one,fitnessScene,queueX(2),queueY)
+            +
+            (m=3) ->
+                CheckReservation(3,1);
+                move_to(perso_one,fitnessScene,queueX(3),queueY))
+        +
+        (n=2) ->
+            ((m=1) ->
+                CheckReservation(1,2);
+                move_to(perso_two,fitnessScene,queueX(1),queueY)
+            +
+            (m=2) ->
+                CheckReservation(2,2);
+                move_to(perso_two,fitnessScene,queueX(2),queueY)
+            +
+            (m=3) ->
+                CheckReservation(3,2);
+                move_to(perso_two,fitnessScene,queueX(3),queueY))
+        +
+        (n=3) ->
+            ((m=1) ->
+                CheckReservation(1,3);
+                move_to(perso_three,fitnessScene,queueX(1),queueY)
+            +
+            (m=2) ->
+                CheckReservation(2,3);
+                move_to(perso_three,fitnessScene,queueX(2),queueY)
+            +
+            (m=3) ->
+                CheckReservation(3,3);
+                move_to(perso_three,fitnessScene,queueX(3),queueY))).
+
+
+	UseMachine(m:MachineNumber,n:CharacterNumber)=
 		( (m=1 & n=1) -> (ask(m1);ask(n1);
+                    CheckReservation(1,1);
 					get(m1);get(n1);
-					place_at(perso_one,fitnessScene,queue(1),400);
-                    tell(q1char1) )
+                    UpdateQueue(1,1);
+					move_to(perso_one,fitnessScene,machineX(1),machineY);
+                    tell(m1char1) )
 					)
         +
         ( (m=1 & n=2) -> (ask(m1);ask(n2);
+                    CheckReservation(1,2);
 					get(m1);get(n2);
-					place_at(perso_two,fitnessScene,queue(1),400);
-                    tell(q1char2) )
+                    UpdateQueue(1,2);
+					move_to(perso_two,fitnessScene,machineX(1),machineY);
+                    tell(m1char2) )
 					)
         +
 		( (m=1 & n=3) -> (ask(m1);ask(n3);
+                    CheckReservation(1,3);
 					get(m1);get(n3);
-					place_at(perso_three,fitnessScene,queue(1),400);
-                    tell(q1char3) )
+                    UpdateQueue(1,3);
+					move_to(perso_three,fitnessScene,machineX(1),machineY);
+                    tell(m1char3) )
 					)
 		+
 		( (m=2 & n=1) -> (ask(m2);ask(n1);
+                    CheckReservation(2,1);
 					get(m2);get(n1);
-					place_at(perso_one,fitnessScene,queue(2),400);
-                    tell(q2char1) )
+                    UpdateQueue(2,1);
+					move_to(perso_one,fitnessScene,machineX(2),machineY);
+                    tell(m2char1) )
 					)
         +
         ( (m=2 & n=2) -> (ask(m2);ask(n2);
+                    CheckReservation(2,2);
 					get(m2);get(n2);
-					place_at(perso_two,fitnessScene,queue(2),400);
-                    tell(q2char2) )
+                    UpdateQueue(2,2);
+					move_to(perso_two,fitnessScene,machineX(2),machineY);
+                    tell(m2char2) )
 					)
         +( (m=2 & n=3) -> (ask(m2);ask(n3);
+                    CheckReservation(2,3);
 					get(m2);get(n3);
-					place_at(perso_three,fitnessScene,queue(2),400);
-                    tell(q2char3) )
+                    UpdateQueue(2,3);
+					move_to(perso_three,fitnessScene,machineX(2),machineY);
+                    tell(m2char3) )
 					)
 		+
 		( (m=3 & n=1) -> (ask(m3);ask(n1);
+                    CheckReservation(3,1);
 					get(m3);get(n1);
-					place_at(perso_one,fitnessScene,queue(3),400);
-                    tell(q3char1) )
+                    UpdateQueue(3,1);
+					move_to(perso_one,fitnessScene,machineX(3),machineY);
+                    tell(m3char1) )
 					)
         +
         ( (m=3 & n=2) -> (ask(m3);ask(n2);
+                    CheckReservation(3,2);
 					get(m3);get(n2);
-					place_at(perso_two,fitnessScene,queue(3),400);
-                    tell(q3char2) )
+                    UpdateQueue(3,2);
+					move_to(perso_two,fitnessScene,machineX(3),machineY);
+                    tell(m3char2) )
 					)
         +( (m=3 & n=3) -> (ask(m3);ask(n3);
+                    CheckReservation(3,3);
 					get(m3);get(n3);
-					place_at(perso_three,fitnessScene,queue(3),400);
-                    tell(q3char3) )
+                    UpdateQueue(3,3);
+					move_to(perso_three,fitnessScene,machineX(3),machineY);
+                    tell(m3char3) )
 					)
         .
-	LibereMachine(m:MachineNumber,n:CharacterNumber)=
-		( (m=1 & n=1) -> (nask(m1);nask(n1);ask(q1char1);
-					place_at(perso_one,fitnessScene,character(1),500);
-					get(q1char1);
+	FreeMachine(m:MachineNumber,n:CharacterNumber)=
+		( (m=1 & n=1) -> (nask(m1);nask(n1);ask(m1char1);
+					move_to(perso_one,fitnessScene,character(1),500);
+					get(m1char1);
                     tell(m1);tell(n1) )
 					)
         +
-        ( (m=1 & n=2) -> (nask(m1);nask(n2);ask(q1char2);
-					place_at(perso_two,fitnessScene,character(2),500);
-					get(q1char2);
+        ( (m=1 & n=2) -> (nask(m1);nask(n2);ask(m1char2);
+					move_to(perso_two,fitnessScene,character(2),500);
+					get(m1char2);
                     tell(m1);tell(n2) )
 					)
         +
-		( (m=1 & n=3) -> (nask(m1);nask(n3);ask(q1char3);
-					place_at(perso_three,fitnessScene,character(3),500);
-					get(q1char3);
+		( (m=1 & n=3) -> (nask(m1);nask(n3);ask(m1char3);
+					move_to(perso_three,fitnessScene,character(3),500);
+					get(m1char3);
                     tell(m1);tell(n3) )
 					)
 		+
-		( (m=2 & n=1) -> (nask(m2);nask(n1);ask(q2char1);
-					place_at(perso_one,fitnessScene,character(1),500);
-					get(q2char1);
+		( (m=2 & n=1) -> (nask(m2);nask(n1);ask(m2char1);
+					move_to(perso_one,fitnessScene,character(1),500);
+					get(m2char1);
                     tell(m2);tell(n1) )
 					)
         +
-        ( (m=2 & n=2) -> (nask(m2);nask(n2);ask(q2char2);
-					place_at(perso_two,fitnessScene,character(2),500);
-					get(q2char2);
+        ( (m=2 & n=2) -> (nask(m2);nask(n2);ask(m2char2);
+					move_to(perso_two,fitnessScene,character(2),500);
+					get(m2char2);
                     tell(m2);tell(n2) )
 					)
         +
-		( (m=2 & n=3) -> (nask(m2);nask(n3);ask(q2char3);
-					place_at(perso_three,fitnessScene,character(3),500);
-					get(q2char3);
+		( (m=2 & n=3) -> (nask(m2);nask(n3);ask(m2char3);
+					move_to(perso_three,fitnessScene,character(3),500);
+					get(m2char3);
                     tell(m2);tell(n3) )
 					)
-		+( (m=3 & n=1) -> (nask(m3);nask(n1);ask(q3char1);
-					place_at(perso_one,fitnessScene,character(1),500);
-					get(q3char1);
+		+( (m=3 & n=1) -> (nask(m3);nask(n1);ask(m3char1);
+					move_to(perso_one,fitnessScene,character(1),500);
+					get(m3char1);
                     tell(m3);tell(n1) )
 					)
         +
-        ( (m=3 & n=2) -> (nask(m3);nask(n2);ask(q3char2);
-					place_at(perso_two,fitnessScene,character(2),500);
-					get(q3char2);
+        ( (m=3 & n=2) -> (nask(m3);nask(n2);ask(m3char2);
+					move_to(perso_two,fitnessScene,character(2),500);
+					get(m3char2);
                     tell(m3);tell(n2) )
 					)
         +
-		( (m=3 & n=3) -> (nask(m3);nask(n3);ask(q3char3);
-					place_at(perso_three,fitnessScene,character(3),500);
-					get(q3char3);
+		( (m=3 & n=3) -> (nask(m3);nask(n3);ask(m3char3);
+					move_to(perso_three,fitnessScene,character(3),500);
+					get(m3char3);
                     tell(m3);tell(n3) )
 					)
-		
         .
-		
+
+    BreakMachine(m:MachineNumber)=
+        ( (m=1) -> 
+            get(m1)
+            
+        )
+        +
+        ((m=2) -> get(m2))
+        +
+        ((m=3) -> get(m3)).
+
+    RepairMachine(m:MachineNumber)=
+        ( (m=1) -> tell(m1))
+        +
+        ((m=2) -> tell(m2))
+        +
+        ((m=3) -> tell(m3)).
+
 
     InitScene = draw_scene(fitnessScene);
                 Place_machine(1);Place_machine(2);Place_machine(3);
@@ -199,39 +374,39 @@ proc Place_machine(n:MachineNumber) =
 
 	ComposeSeance(m:MachineNumber,n:CharacterNumber)=
 		nask(m); nask(n);
-		ReserveMachine(m,n);
-		LibereMachine(m,n).
+		UseMachine(m,n);
+		FreeMachine(m,n).
 
 
 
 
 
     PersoOneProc=
-            get(q3);place_at(perso_one,fitnessScene,queue(3),500);
-            get(q2);place_at(perso_one,fitnessScene,queue(2),500);tell(q3);
-            get(q1);place_at(perso_one,fitnessScene,queue(1),500);tell(q2);
-            ((get(m1);place_at(perso_one,fitnessScene,machine(1),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m1);PersoOneProc)+
-            (get(m2);place_at(perso_one,fitnessScene,machine(2),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m2);PersoOneProc)+
-            (get(m3);place_at(perso_one,fitnessScene,machine(3),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m3);PersoOneProc)).
+            get(q3);place_at(perso_one,fitnessScene,queueX(3),500);
+            get(q2);place_at(perso_one,fitnessScene,queueX(2),500);tell(q3);
+            get(q1);place_at(perso_one,fitnessScene,queueX(1),500);tell(q2);
+            ((get(m1);place_at(perso_one,fitnessScene,machineX(1),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m1);PersoOneProc)+
+            (get(m2);place_at(perso_one,fitnessScene,machineX(2),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m2);PersoOneProc)+
+            (get(m3);place_at(perso_one,fitnessScene,machineX(3),360);tell(q1);place_at(perso_one,fitnessScene,100,500);tell(m3);PersoOneProc)).
 
     PersoTwoProc =
-        get(q3); place_at(perso_two, fitnessScene, queue(3), 500);
-        get(q2); place_at(perso_two, fitnessScene, queue(2), 500); tell(q3);
-        get(q1); place_at(perso_two, fitnessScene, queue(1), 500); tell(q2);
+        get(q3); place_at(perso_two, fitnessScene, queueX(3), 500);
+        get(q2); place_at(perso_two, fitnessScene, queueX(2), 500); tell(q3);
+        get(q1); place_at(perso_two, fitnessScene, queueX(1), 500); tell(q2);
         (
-            (get(m1); move_to(perso_two, fitnessScene, machine(1), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m1); PersoTwoProc) +
-            (get(m2); move_to(perso_two, fitnessScene, machine(2), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m2); PersoTwoProc) +
-            (get(m3); move_to(perso_two, fitnessScene, machine(3), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m3); PersoTwoProc)
+            (get(m1); move_to(perso_two, fitnessScene, machineX(1), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m1); PersoTwoProc) +
+            (get(m2); move_to(perso_two, fitnessScene, machineX(2), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m2); PersoTwoProc) +
+            (get(m3); move_to(perso_two, fitnessScene, machineX(3), 360); tell(q1); move_to(perso_two, fitnessScene, 75, 500); tell(m3); PersoTwoProc)
         ).
 
     PersoThreeProc =
-        get(q3); place_at(perso_three, fitnessScene, queue(3), 500);
-        get(q2); place_at(perso_three, fitnessScene, queue(2), 500); tell(q3);
-        get(q1); place_at(perso_three, fitnessScene, queue(1), 500); tell(q2);
+        get(q3); place_at(perso_three, fitnessScene, queueX(3), 500);
+        get(q2); place_at(perso_three, fitnessScene, queueX(2), 500); tell(q3);
+        get(q1); place_at(perso_three, fitnessScene, queueX(1), 500); tell(q2);
         (
-            (get(m1); place_at(perso_three, fitnessScene, machine(1), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m1); PersoThreeProc) +
-            (get(m2); place_at(perso_three, fitnessScene, machine(2), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m2); PersoThreeProc) +
-            (get(m3); place_at(perso_three, fitnessScene, machine(3), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m3); PersoThreeProc)
+            (get(m1); place_at(perso_three, fitnessScene, machineX(1), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m1); PersoThreeProc) +
+            (get(m2); place_at(perso_three, fitnessScene, machineX(2), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m2); PersoThreeProc) +
+            (get(m3); place_at(perso_three, fitnessScene, machineX(3), 360); tell(q1); place_at(perso_three, fitnessScene, 50, 500); tell(m3); PersoThreeProc)
         ).
 
     AllPersoProc = (PersoOneProc || PersoTwoProc ||PersoThreeProc ).
