@@ -18,6 +18,24 @@ scene fitnessScene = {
     perso_one_img = loadImage(Images/Perso1.png).
     perso_two_img = loadImage(Images/Perso2.png).
     perso_three_img = loadImage(Images/Perso3.png).
+    croix_one_img = loadImage(Images/croix.png).
+    croix_two_img = loadImage(Images/croix.png).
+    croix_three_img = loadImage(Images/croix.png).
+
+    widget croix_one = {
+        display = { croix_one_img }
+       init = { wdL = top.}
+    }
+
+    widget croix_two = {
+        display = { croix_two_img }
+       init = { wdL = top.}
+    }
+
+    widget croix_three = {
+        display = { croix_three_img }
+       init = { wdL = top.}
+    }
 
     widget machine_one = {
        display = { machine_one_img }
@@ -62,6 +80,11 @@ proc Place_machine(n:MachineNumber) =
         ( (n=3) -> (place_at(machine_three,fitnessScene,machineX(3),machineY);
                     show(machine_three,fitnessScene);
                     tell(m3) )).
+
+    Place_croix = 
+        place_at(croix_one,fitnessScene,machineX(1),machineY);
+        place_at(croix_two,fitnessScene,machineX(2),machineY);
+        place_at(croix_three,fitnessScene,machineX(3),machineY).
 
     Place_character(n:CharacterNumber) =
         ( (n=1) -> (place_at(perso_one,fitnessScene,character(1),500);
@@ -204,25 +227,23 @@ proc Place_machine(n:MachineNumber) =
         .
 
     BreakMachine(m:MachineNumber)=
-        ( (m=1) -> 
-            get(m1)
-            
-        )
+        ( (m=1) -> get(m1);show(croix_one,fitnessScene))
         +
-        ((m=2) -> get(m2))
+        ((m=2) -> get(m2);show(croix_two,fitnessScene))
         +
-        ((m=3) -> get(m3)).
+        ((m=3) -> get(m3);show(croix_three,fitnessScene)).
 
     RepairMachine(m:MachineNumber)=
-        ( (m=1) -> tell(m1))
+        ( (m=1) -> tell(m1);hide(croix_one,fitnessScene))
         +
-        ((m=2) -> tell(m2))
+        ((m=2) -> tell(m2);hide(croix_two,fitnessScene))
         +
-        ((m=3) -> tell(m3)).
+        ((m=3) -> tell(m3);hide(croix_three,fitnessScene)).
 
 
     InitScene = draw_scene(fitnessScene);
                 Place_machine(1);Place_machine(2);Place_machine(3);
+                Place_croix;
                 Place_character(1);Place_character(2);Place_character(3).
 
 
