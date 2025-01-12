@@ -76,213 +76,74 @@ proc Place_machine(n:MachineNumber) =
                     show(perso_three,fitnessScene);
 					tell(n3) )).
 
-    CheckQueue(m:MachineNumber)=
-        ( (m=1) -> nask(q1_1);nask(q1_2);nask(q1_3))
-        +
-        ( (m=2) -> nask(q2_1);nask(q2_2);nask(q2_3))
-        +
-        ( (m=3) -> nask(q3_1);nask(q3_2);nask(q3_3)).
-
-    CheckReservation(m:MachineNumber,n:CharacterNumber)=
-        ( (m=1) ->
-            (n=1 -> ask(q1_1)
-            +
-            n=2 -> ask(q1_2)
-            +
-            n=3 -> ask(q1_3) ))
-        +
-        ( (m=2) ->
-            (n=1 -> ask(q2_1)
-            +
-            n=2 -> ask(q2_2)
-            +
-            n=3 -> ask(q2_3) ))
-        +
-        ( (m=3) ->
-            (n=1 -> ask(q3_1)
-            +
-            n=2 -> ask(q3_2)
-            +
-            n=3 -> ask(q3_3) )).
-
-    UpdateQueue(m:MachineNumber,n:CharacterNumber)=
-        ( (m=1) ->
-            (n=1 -> get(q1_1)
-            +
-            n=2 -> get(q1_2)
-            +
-            n=3 -> get(q1_3) )
-            )
-        +
-        ( (m=2) ->
-            (n=1 -> get(q2_1)
-            +
-            n=2 -> get(q2_2)
-            +
-            n=3 -> get(q2_3) )
-            )
-        +
-        ( (m=3) ->
-            (n=1 -> get(q3_1)
-            +
-            n=2 -> get(q3_2)
-            +
-            n=3 -> get(q3_3) )
-            ).
-
-    ReserveQueue(n:CharacterNumber)=
-        ( (n=1) -> tell(q1_1))
-        +
-        ( (n=2) -> tell(q1_2))
-        +
-        ( (n=3) -> tell(q1_3)).
-
-    ReserveMachine(m:MachineNumber,n:CharacterNumber)=
-        ( (m=1 & n=1) ->
-            CheckQueue(1);
-            ReserveQueue(n))
-        +
-        ( (m=1 & n=2) ->
-            CheckQueue(1);
-            ReserveQueue(n))
-        +
-        ( (m=1 & n=3) ->
-            CheckQueue(1);
-            ReserveQueue(n))
-        +
-        ( (m=2 & n=1) ->
-            CheckQueue(2);
-            ReserveQueue(n))
-        +
-        ( (m=2 & n=2) ->
-            CheckQueue(2);
-            ReserveQueue(n))
-        +
-        ( (m=2 & n=3) ->
-            CheckQueue(2);
-            ReserveQueue(n))
-        +
-        ( (m=3 & n=1) ->
-            CheckQueue(3);
-            ReserveQueue(n))
-        +
-        ( (m=3 & n=2) ->
-            CheckQueue(3);
-            ReserveQueue(n))
-        +
-        ( (m=3 & n=3) ->
-            CheckQueue(3);
-            ReserveQueue(n)).
-
-
-    GoToQueue(n:CharacterNumber, m:MachineNumber)=
-        ( (n=1) ->
-            ((m=1) ->
-                CheckReservation(1,1);
-                move_to(perso_one,fitnessScene,queueX(1),queueY)
-            +
-            (m=2) ->
-                CheckReservation(2,1);
-                move_to(perso_one,fitnessScene,queueX(2),queueY)
-            +
-            (m=3) ->
-                CheckReservation(3,1);
-                move_to(perso_one,fitnessScene,queueX(3),queueY))
-        +
-        (n=2) ->
-            ((m=1) ->
-                CheckReservation(1,2);
-                move_to(perso_two,fitnessScene,queueX(1),queueY)
-            +
-            (m=2) ->
-                CheckReservation(2,2);
-                move_to(perso_two,fitnessScene,queueX(2),queueY)
-            +
-            (m=3) ->
-                CheckReservation(3,2);
-                move_to(perso_two,fitnessScene,queueX(3),queueY))
-        +
-        (n=3) ->
-            ((m=1) ->
-                CheckReservation(1,3);
-                move_to(perso_three,fitnessScene,queueX(1),queueY)
-            +
-            (m=2) ->
-                CheckReservation(2,3);
-                move_to(perso_three,fitnessScene,queueX(2),queueY)
-            +
-            (m=3) ->
-                CheckReservation(3,3);
-                move_to(perso_three,fitnessScene,queueX(3),queueY))).
-
 
 	UseMachine(m:MachineNumber,n:CharacterNumber)=
 		( (m=1 & n=1) -> (ask(m1);ask(n1);
-                    CheckReservation(1,1);
+
 					get(m1);get(n1);
-                    UpdateQueue(1,1);
+
 					move_to(perso_one,fitnessScene,machineX(1),machineY);
                     tell(m1char1) )
 					)
         +
         ( (m=1 & n=2) -> (ask(m1);ask(n2);
-                    CheckReservation(1,2);
+
 					get(m1);get(n2);
-                    UpdateQueue(1,2);
+
 					move_to(perso_two,fitnessScene,machineX(1),machineY);
                     tell(m1char2) )
 					)
         +
 		( (m=1 & n=3) -> (ask(m1);ask(n3);
-                    CheckReservation(1,3);
+
 					get(m1);get(n3);
-                    UpdateQueue(1,3);
+
 					move_to(perso_three,fitnessScene,machineX(1),machineY);
                     tell(m1char3) )
 					)
 		+
 		( (m=2 & n=1) -> (ask(m2);ask(n1);
-                    CheckReservation(2,1);
+
 					get(m2);get(n1);
-                    UpdateQueue(2,1);
+
 					move_to(perso_one,fitnessScene,machineX(2),machineY);
                     tell(m2char1) )
 					)
         +
         ( (m=2 & n=2) -> (ask(m2);ask(n2);
-                    CheckReservation(2,2);
+
 					get(m2);get(n2);
-                    UpdateQueue(2,2);
+
 					move_to(perso_two,fitnessScene,machineX(2),machineY);
                     tell(m2char2) )
 					)
         +( (m=2 & n=3) -> (ask(m2);ask(n3);
-                    CheckReservation(2,3);
+
 					get(m2);get(n3);
-                    UpdateQueue(2,3);
+
 					move_to(perso_three,fitnessScene,machineX(2),machineY);
                     tell(m2char3) )
 					)
 		+
 		( (m=3 & n=1) -> (ask(m3);ask(n1);
-                    CheckReservation(3,1);
+
 					get(m3);get(n1);
-                    UpdateQueue(3,1);
+
 					move_to(perso_one,fitnessScene,machineX(3),machineY);
                     tell(m3char1) )
 					)
         +
         ( (m=3 & n=2) -> (ask(m3);ask(n2);
-                    CheckReservation(3,2);
+
 					get(m3);get(n2);
-                    UpdateQueue(3,2);
+
 					move_to(perso_two,fitnessScene,machineX(3),machineY);
                     tell(m3char2) )
 					)
         +( (m=3 & n=3) -> (ask(m3);ask(n3);
-                    CheckReservation(3,3);
+
 					get(m3);get(n3);
-                    UpdateQueue(3,3);
+
 					move_to(perso_three,fitnessScene,machineX(3),machineY);
                     tell(m3char3) )
 					)
@@ -376,3 +237,162 @@ proc Place_machine(n:MachineNumber) =
 		nask(m); nask(n);
 		UseMachine(m,n);
 		FreeMachine(m,n).
+		
+		
+		
+		
+	CheckQueue(m:MachineNumber)=
+        ( (m=1) -> nask(q1_1);nask(q1_2);nask(q1_3))
+        +
+        ( (m=2) -> nask(q2_1);nask(q2_2);nask(q2_3))
+        +
+        ( (m=3) -> nask(q3_1);nask(q3_2);nask(q3_3)).
+
+    CheckReservation(m:MachineNumber,n:CharacterNumber)=
+        ( (m=1) ->
+            (n=1 -> ask(q1_1)
+            +
+            n=2 -> ask(q1_2)
+            +
+            n=3 -> ask(q1_3) ))
+        +
+        ( (m=2) ->
+            (n=1 -> ask(q2_1)
+            +
+            n=2 -> ask(q2_2)
+            +
+            n=3 -> ask(q2_3) ))
+        +
+        ( (m=3) ->
+            (n=1 -> ask(q3_1)
+            +
+            n=2 -> ask(q3_2)
+            +
+            n=3 -> ask(q3_3) )).
+
+    UpdateQueue(m:MachineNumber,n:CharacterNumber)=
+        ( (m=1) ->
+            (n=1 -> get(q1_1)
+            +
+            n=2 -> get(q1_2)
+            +
+            n=3 -> get(q1_3) )
+            )
+        +
+        ( (m=2) ->
+            (n=1 -> get(q2_1)
+            +
+            n=2 -> get(q2_2)
+            +
+            n=3 -> get(q2_3) )
+            )
+        +
+        ( (m=3) ->
+            (n=1 -> get(q3_1)
+            +
+            n=2 -> get(q3_2)
+            +
+            n=3 -> get(q3_3) )
+            ).
+
+    ReserveQueue(m:MachineNumber,n:CharacterNumber)=
+        ( (m=1) ->
+            (n=1 -> tell(q1_1)
+            +
+            n=2 -> tell(q1_2)
+            +
+            n=3 -> tell(q1_3) )
+            )
+        +
+        ( (m=2) ->
+            (n=1 -> tell(q2_1)
+            +
+            n=2 -> tell(q2_2)
+            +
+            n=3 -> tell(q2_3) )
+            )
+        +
+        ( (m=3) ->
+            (n=1 -> tell(q3_1)
+            +
+            n=2 -> tell(q3_2)
+            +
+            n=3 -> tell(q3_3) )
+            ).
+
+	ReserveMachine(m:MachineNumber,n:CharacterNumber)=
+        ( (m=1 & n=1) ->
+            CheckQueue(1);
+            ReserveQueue(n))
+        +
+        ( (m=1 & n=2) ->
+            CheckQueue(1);
+            ReserveQueue(n))
+        +
+        ( (m=1 & n=3) ->
+            CheckQueue(1);
+            ReserveQueue(n))
+        +
+        ( (m=2 & n=1) ->
+            CheckQueue(2);
+            ReserveQueue(n))
+        +
+        ( (m=2 & n=2) ->
+            CheckQueue(2);
+            ReserveQueue(n))
+        +
+        ( (m=2 & n=3) ->
+            CheckQueue(2);
+            ReserveQueue(n))
+        +
+        ( (m=3 & n=1) ->
+            CheckQueue(3);
+            ReserveQueue(n))
+        +
+        ( (m=3 & n=2) ->
+            CheckQueue(3);
+            ReserveQueue(n))
+        +
+        ( (m=3 & n=3) ->
+            CheckQueue(3);
+            ReserveQueue(n)).
+    GoToQueue(n:CharacterNumber, m:MachineNumber)=
+        ( (n=1) ->
+            ((m=1) ->
+                CheckReservation(1,1);
+                move_to(perso_one,fitnessScene,queueX(1),queueY)
+            +
+            (m=2) ->
+                CheckReservation(2,1);
+                move_to(perso_one,fitnessScene,queueX(2),queueY)
+            +
+            (m=3) ->
+                CheckReservation(3,1);
+                move_to(perso_one,fitnessScene,queueX(3),queueY))
+        +
+        (n=2) ->
+            ((m=1) ->
+                CheckReservation(1,2);
+                move_to(perso_two,fitnessScene,queueX(1),queueY)
+            +
+            (m=2) ->
+                CheckReservation(2,2);
+                move_to(perso_two,fitnessScene,queueX(2),queueY)
+            +
+            (m=3) ->
+                CheckReservation(3,2);
+                move_to(perso_two,fitnessScene,queueX(3),queueY))
+        +
+        (n=3) ->
+            ((m=1) ->
+                CheckReservation(1,3);
+                move_to(perso_three,fitnessScene,queueX(1),queueY)
+            +
+            (m=2) ->
+                CheckReservation(2,3);
+                move_to(perso_three,fitnessScene,queueX(2),queueY)
+            +
+            (m=3) ->
+                CheckReservation(3,3);
+                move_to(perso_three,fitnessScene,queueX(3),queueY))).
+				
