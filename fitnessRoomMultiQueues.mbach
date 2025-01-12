@@ -1,0 +1,209 @@
+eset CharacterNumber = { 1,2,3 }.
+     MachineNumber = { 1,2,3 }.
+
+eqn queue(1)=450. queue(2)=300. queue(3) = 150.
+    machine(1)=1100.machine(2)=900.machine(3)=700.
+
+
+scene fitnessScene = {
+    size = (1348,980).
+    layers = { top }.
+    background = loadImage(Images/basicFrit.jpg).
+    machine_one_img = loadImage(Images/machine1.png).
+    machine_two_img = loadImage(Images/machine2.png).
+    machine_three_img = loadImage(Images/machine3.png).
+    perso_one_img = loadImage(Images/Perso1.png).
+    perso_two_img = loadImage(Images/Perso2.png).
+    perso_three_img = loadImage(Images/Perso3.png).
+    croix_one_img = loadImage(Images/croix.png).
+    croix_two_img = loadImage(Images/croix.png).
+    croix_three_img = loadImage(Images/croix.png).
+
+    widget machine_one = {
+       display = { machine_one_img }
+       init = { wdL = top.}
+    }
+
+    widget machine_two = {
+       display = { machine_two_img }
+       init = { wdL = top.}
+    }
+
+    widget machine_three = {
+       display = { machine_three_img }
+       init = { wdL = top.}
+    }
+
+    widget perso_one = {
+        display = { perso_one_img }
+       init = { wdL = top.}
+    }
+
+    widget perso_two = {
+        display = { perso_two_img }
+       init = { wdL = top.}
+    }
+
+    widget perso_three = {
+        display = { perso_three_img }
+       init = { wdL = top.}
+    }
+
+    widget croix_one = {
+        display = { croix_one_img }
+       init = { wdL = top.}
+    }
+
+    widget croix_two = {
+        display = { croix_two_img }
+       init = { wdL = top.}
+    }
+
+    widget croix_three = {
+        display = { croix_three_img }
+       init = { wdL = top.}
+    }
+}.
+
+proc InitScene = draw_scene(fitnessScene);
+
+                place_at(machine_one,fitnessScene,machine(1),360);
+                place_at(machine_two,fitnessScene,machine(2),360);
+                place_at(machine_three,fitnessScene,machine(3),360);
+                show(machine_one,fitnessScene);
+                show(machine_two,fitnessScene);
+                show(machine_three,fitnessScene);
+                tell(m1);tell(m2);tell(m3);
+                tell(q1);tell(q2);tell(q3);
+                tell(m1_q1); tell(m1_q2);
+                tell(m2_q1); tell(m2_q2);
+                tell(m3_q1); tell(m3_q2);
+
+                place_at(perso_three,fitnessScene,50,500);
+                place_at(perso_two,fitnessScene,75,500);
+                place_at(perso_one,fitnessScene,100,500);
+                show(perso_three,fitnessScene);
+                show(perso_two,fitnessScene);
+                show(perso_one,fitnessScene);
+
+                place_at(croix_one,fitnessScene,machine(1),360);
+                place_at(croix_two,fitnessScene,machine(2),360);
+                place_at(croix_three,fitnessScene,machine(3),360).
+
+    BreakMachine(m:MachineNumber)=
+        ((m=1) -> (get(m1);show(croix_one,fitnessScene) ))
+        +
+        ((m=2) -> (get(m2);show(croix_two,fitnessScene) ))
+        +
+        ((m=3) -> (get(m3);show(croix_three,fitnessScene) )).
+
+    RepairMachine(m:MachineNumber)=
+        ((m=1) -> (tell(m1);hide(croix_one,fitnessScene) ))
+        +
+        ((m=2) -> (tell(m2);hide(croix_two,fitnessScene) ))
+        +
+        ((m=3) -> (tell(m3);hide(croix_three,fitnessScene) )).
+
+
+    PersoProc(p:CharacterNumber)=
+    (
+        (p = 1) ->
+        (
+            get(q3);move_to(perso_one, fitnessScene, queue(3), 500);
+            get(q2);move_to(perso_one, fitnessScene, queue(2), 500);tell(q3);
+            get(q1);move_to(perso_one, fitnessScene, queue(1), 500);tell(q2);
+    
+            (
+                (
+                    get(m1_q1);move_to(perso_one, fitnessScene, machine(1), 450);tell(q1);
+                    get(m1_q2);move_to(perso_one, fitnessScene, machine(1), 400);tell(m1_q1);
+                    get(m1);move_to(perso_one, fitnessScene, machine(1), 360);tell(m1_q2);
+                    move_to(perso_one, fitnessScene, 100, 500);tell(m1)
+                )
+                +
+                (
+                    get(m2_q1);move_to(perso_one, fitnessScene, machine(2), 450);tell(q1);
+                    get(m2_q2);move_to(perso_one, fitnessScene, machine(2), 400);tell(m2_q1);
+                    get(m2);move_to(perso_one, fitnessScene, machine(2), 360);tell(m2_q2);
+                    move_to(perso_one, fitnessScene, 100, 500);tell(m2)
+                )
+                +
+                (
+                    get(m3_q1);move_to(perso_one, fitnessScene, machine(3), 450);tell(q1);
+                    get(m3_q2);move_to(perso_one, fitnessScene, machine(3), 400);tell(m3_q2);
+                    get(m3);move_to(perso_one, fitnessScene, machine(3), 360);tell(m3_q2);
+                    move_to(perso_one, fitnessScene, 100, 500);tell(m3)
+                )
+            );
+            PersoProc(1)
+        )
+    )
+    +
+    (
+        (p = 2) ->
+        (
+            get(q3);move_to(perso_two, fitnessScene, queue(3), 500);
+            get(q2);move_to(perso_two, fitnessScene, queue(2), 500);tell(q3);
+            get(q1);move_to(perso_two, fitnessScene, queue(1), 500);tell(q2);
+    
+            (
+                (
+                    get(m1_q1);move_to(perso_two, fitnessScene, machine(1), 450);tell(q1);
+                    get(m1_q2);move_to(perso_two, fitnessScene, machine(1), 400);tell(m1_q1);
+                    get(m1);move_to(perso_two, fitnessScene, machine(1), 360);tell(m1_q2);
+                    move_to(perso_two, fitnessScene, 75, 500);tell(m1)
+                )
+                +
+                (
+                    get(m2_q1);move_to(perso_two, fitnessScene, machine(2), 450);tell(q1);
+                    get(m2_q2);move_to(perso_two, fitnessScene, machine(2), 400);tell(m2_q1);
+                    get(m2);move_to(perso_two, fitnessScene, machine(2), 360);tell(m2_q2);
+                    move_to(perso_two, fitnessScene, 75, 500);tell(m2)
+                )
+                +
+                (
+                    get(m3_q1);move_to(perso_two, fitnessScene, machine(3), 450);tell(q1);
+                    get(m3_q2);move_to(perso_two, fitnessScene, machine(3), 400);tell(m3_q1);
+                    get(m3);move_to(perso_two, fitnessScene, machine(3), 360);tell(m3_q2);
+                    move_to(perso_two, fitnessScene, 75, 500);tell(m3)
+                )
+            );
+            PersoProc(2)
+        )
+    )
+    +
+    (
+        (p = 3) ->
+        (
+            get(q3);move_to(perso_three, fitnessScene, queue(3), 500);
+            get(q2);move_to(perso_three, fitnessScene, queue(2), 500);tell(q3);
+            get(q1);move_to(perso_three, fitnessScene, queue(1), 500);tell(q2);
+    
+            (
+                (
+                    get(m1_q1);move_to(perso_three, fitnessScene, machine(1), 450);tell(q1);
+                    get(m1_q2);move_to(perso_three, fitnessScene, machine(1), 400);tell(m1_q1);
+                    get(m1);move_to(perso_three, fitnessScene, machine(1), 360);tell(m1_q2);
+                    move_to(perso_three, fitnessScene, 50, 500);tell(m1)
+                )
+                +
+                (
+                    get(m2_q1);move_to(perso_three, fitnessScene, machine(2), 450);tell(q1);
+                    get(m2_q2);move_to(perso_three, fitnessScene, machine(2), 400);tell(m2_q1);
+                    get(m2);move_to(perso_three, fitnessScene, machine(2), 360);tell(m2_q2);
+                    move_to(perso_three, fitnessScene, 50, 500);tell(m2)
+                )
+                +
+                (
+                    get(m3_q1);move_to(perso_three, fitnessScene, machine(3), 450);tell(q1);
+                    get(m3_q2);move_to(perso_three, fitnessScene, machine(3), 400);tell(m3_q1);
+                    get(m3);move_to(perso_three, fitnessScene, machine(3), 360);tell(m3_q2);
+                    move_to(perso_three, fitnessScene, 50, 500);tell(m3)
+                )
+            );
+            PersoProc(3)
+        )
+    ).
+    
+        
+    AllPersoProc = (PersoProc(1) || PersoProc(2) || PersoProc(3) ).
