@@ -6,8 +6,11 @@ eset CharacterNumber = { 1,2,3 }.
 eqn queueX(1)=1050. queueX(2)=850. queueX(3) = 650.
     machineX(1)=1100. machineX(2)=900.machineX(3)=700.
     machineY=360. queueY=550.
-    croixY=200.
-	character(1)=100. 	character(2)=75. 	character(3)=50.
+    croixY=150.
+	checkmarkY=300.
+	phoneY = 200.
+	characterY=500.
+	characterX(1)=100. 	characterX(2)=75. 	characterX(3)=50.
 
 scene fitnessScene = {
     size = (1348,980).
@@ -22,6 +25,13 @@ scene fitnessScene = {
     croix_one_img = loadImage(Images/croix.png).
     croix_two_img = loadImage(Images/croix.png).
     croix_three_img = loadImage(Images/croix.png).
+	checkmark_one_img = loadImage(Images/checkmark.png).
+    checkmark_two_img = loadImage(Images/checkmark.png).
+    checkmark_three_img = loadImage(Images/checkmark.png).
+	phone_one_img = loadImage(Images/phone.png).
+	phone_two_img = loadImage(Images/phone.png).
+	phone_three_img = loadImage(Images/phone.png).
+
 
     widget machine_one = {
        display = { machine_one_img }
@@ -38,7 +48,7 @@ scene fitnessScene = {
        init = { wdL = top.}
     }
 
-        widget croix_one = {
+    widget croix_one = {
         display = { croix_one_img }
        init = { wdL = top.}
     }
@@ -52,7 +62,33 @@ scene fitnessScene = {
         display = { croix_three_img }
        init = { wdL = top.}
     }
+	widget checkmark_one = {
+        display = {  checkmark_one_img }
+       init = { wdL = top.}
+    }
 
+    widget checkmark_two = {
+        display = { checkmark_two_img }
+       init = { wdL = top.}
+    }
+
+    widget checkmark_three = {
+        display = { checkmark_three_img }
+       init = { wdL = top.}
+    }
+	widget phone_one = {
+        display = { phone_one_img }
+       init = { wdL = top.}
+    }
+	widget phone_two = {
+        display = { phone_two_img }
+       init = { wdL = top.}
+    }
+	widget phone_three = {
+        display = { phone_three_img }
+       init = { wdL = top.}
+    }
+	
     widget perso_one = {
         display = { perso_one_img }
        init = { wdL = top.}
@@ -86,17 +122,25 @@ proc Place_machine(n:MachineNumber) =
         place_at(croix_one,fitnessScene,machineX(1),croixY);
         place_at(croix_two,fitnessScene,machineX(2),croixY);
         place_at(croix_three,fitnessScene,machineX(3),croixY).
+	Place_checkmark =
+        place_at(checkmark_one,fitnessScene,characterX(1),checkmarkY);
+        place_at(checkmark_two,fitnessScene,characterX(2),checkmarkY);
+        place_at(checkmark_three,fitnessScene,characterX(3),checkmarkY).	
+	Place_phone = 
+		place_at(phone_one,fitnessScene,machineX(1),phoneY);
+        place_at(phone_two,fitnessScene,machineX(2),phoneY);
+        place_at(phone_three,fitnessScene,machineX(3),phoneY).
 
     Place_character(n:CharacterNumber) =
-        ( (n=1) -> (place_at(perso_one,fitnessScene,character(1),500);
+        ( (n=1) -> (place_at(perso_one,fitnessScene,characterX(1),characterY);
                     show(perso_one,fitnessScene);
 					tell(c1) ))
         +
-        ( (n=2) -> (place_at(perso_two,fitnessScene,character(2),500);
+        ( (n=2) -> (place_at(perso_two,fitnessScene,characterX(2),characterY);
                     show(perso_two,fitnessScene);
 					tell(c2) ))
         +
-        ( (n=3) -> (place_at(perso_three,fitnessScene,character(3),500);
+        ( (n=3) -> (place_at(perso_three,fitnessScene,characterX(3),characterY);
                     show(perso_three,fitnessScene);
 					tell(c3) )).
 
@@ -107,6 +151,7 @@ proc Place_machine(n:MachineNumber) =
                     get(m1); get(c1);
                     get(q1_1);
                     move_to(perso_one,fitnessScene,machineX(1),machineY);
+					show(phone_one,fitnessScene);
                     tell(1char1) ))
         +
         ( (m=1 & n=2) -> (
@@ -114,6 +159,7 @@ proc Place_machine(n:MachineNumber) =
                     get(m1); get(c2);
                     get(q1_2);
                     move_to(perso_two,fitnessScene,machineX(1),machineY);
+					show(phone_one,fitnessScene);
                     tell(1char2) ))
         +
         ( (m=1 & n=3) -> (
@@ -121,6 +167,7 @@ proc Place_machine(n:MachineNumber) =
                     get(m1); get(c3);
                     get(q1_3);
                     move_to(perso_three,fitnessScene,machineX(1),machineY);
+					show(phone_one,fitnessScene);
                     tell(1char3) ))
 
         +
@@ -129,6 +176,7 @@ proc Place_machine(n:MachineNumber) =
                     get(m2); get(c1);
                     get(q2_1);
                     move_to(perso_one,fitnessScene,machineX(2),machineY);
+					show(phone_two,fitnessScene);
                     tell(2char1) ))
         +
         ( (m=2 & n=2) -> (
@@ -136,6 +184,7 @@ proc Place_machine(n:MachineNumber) =
                     get(m2); get(c2);
                     get(q2_2);
                     move_to(perso_two,fitnessScene,machineX(2),machineY);
+					show(phone_two,fitnessScene);
                     tell(2char2) ))
         +
         ( (m=2 & n=3) -> (
@@ -143,6 +192,7 @@ proc Place_machine(n:MachineNumber) =
                     get(m2); get(c3);
                     get(q2_3);
                     move_to(perso_three,fitnessScene,machineX(2),machineY);
+					show(phone_two,fitnessScene);
                     tell(2char3) ))
         +
         ( (m=3 & n=1) -> (
@@ -150,6 +200,7 @@ proc Place_machine(n:MachineNumber) =
                     get(m3); get(c1);
                     get(q3_1);
                     move_to(perso_one,fitnessScene,machineX(3),machineY);
+					show(phone_three,fitnessScene);
                     tell(3char1) ))
         +
         ( (m=3 & n=2) -> (
@@ -157,6 +208,7 @@ proc Place_machine(n:MachineNumber) =
                     get(m3); get(c2);
                     get(q3_2);
                     move_to(perso_two,fitnessScene,machineX(3),machineY);
+					show(phone_three,fitnessScene);
                     tell(3char2) ))
         +
         ( (m=3 & n=3) -> (
@@ -164,58 +216,68 @@ proc Place_machine(n:MachineNumber) =
                     get(m3); get(c3);
                     get(q3_3);
                     move_to(perso_three,fitnessScene,machineX(3),machineY);
+					show(phone_three,fitnessScene);
                     tell(3char3) )).
 
 	FreeMachine(m:MachineNumber,n:CharacterNumber)=
 		( (m=1 & n=1) -> (nask(m1);nask(c1);ask(1char1);
-					move_to(perso_one,fitnessScene,character(1),500);
+					hide(phone_one,fitnessScene);
+					move_to(perso_one,fitnessScene,characterX(1),characterY);
 					get(1char1);
                     tell(m1); tell(c1) )
 					)
         +
         ( (m=1 & n=2) -> (nask(m1);nask(c2);ask(1char2);
-                    move_to(perso_two,fitnessScene,character(2),500);
+					hide(phone_one,fitnessScene);
+                    move_to(perso_two,fitnessScene,characterX(2),characterY);
                     get(1char2);
                     tell(m1); tell(c2) )
                     )
         +
 		( (m=1 & n=3) -> (nask(m1);nask(c3);ask(1char3);
-					move_to(perso_three,fitnessScene,character(3),500);
+					hide(phone_one,fitnessScene);
+					move_to(perso_three,fitnessScene,characterX(3),characterY);
 					get(1char3);
                     tell(m1); tell(c3) )
 					)
 		+
 		( (m=2 & n=1) -> (nask(m2);nask(c1);ask(2char1);
-					move_to(perso_one,fitnessScene,character(1),500);
+					hide(phone_two,fitnessScene);
+					move_to(perso_one,fitnessScene,characterX(1),characterY);
 					get(2char1);
                     tell(m2); tell(c1) )
 					)
         +
         ( (m=2 & n=2) -> (nask(m2);nask(c2);ask(2char2);
-					move_to(perso_two,fitnessScene,character(2),500);
+					hide(phone_two,fitnessScene);
+					move_to(perso_two,fitnessScene,characterX(2),characterY);
 					get(2char2);
                     tell(m2); tell(c2) )
 					)
         +
 		( (m=2 & n=3) -> (nask(m2);nask(c3);ask(2char3);
-					move_to(perso_three,fitnessScene,character(3),500);
+					hide(phone_two,fitnessScene);
+					move_to(perso_three,fitnessScene,characterX(3),characterY);
 					get(2char3);
                     tell(m2); tell(c3) )
 					)
 		+( (m=3 & n=1) -> (nask(m3);nask(c1);ask(3char1);
-					move_to(perso_one,fitnessScene,character(1),500);
+					hide(phone_three,fitnessScene);
+					move_to(perso_one,fitnessScene,characterX(1),characterY);
 					get(3char1);
                     tell(m3); tell(c1) )
 					)
         +
         ( (m=3 & n=2) -> (nask(m3);nask(c2);ask(3char2);
-					move_to(perso_two,fitnessScene,character(2),500);
+					hide(phone_three,fitnessScene);
+					move_to(perso_two,fitnessScene,characterX(2),characterY);
 					get(3char2);
                     tell(m3); tell(c2) )
 					)
         +
 		( (m=3 & n=3) -> (nask(m3);nask(c3);ask(3char3);
-					move_to(perso_three,fitnessScene,character(3),500);
+					hide(phone_three,fitnessScene);
+					move_to(perso_three,fitnessScene,characterX(3),characterY);
 					get(3char3);
                     tell(m3); tell(c3) )
 					)
@@ -303,10 +365,13 @@ proc Place_machine(n:MachineNumber) =
         +
         ((m=3 & n=3) -> CheckReservation(m,n);move_to(perso_three,fitnessScene,queueX(3),queueY)).
 
-
+	
+					
     InitScene = draw_scene(fitnessScene);
             Place_machine(1);Place_machine(2);Place_machine(3);
             Place_croix;
+			Place_checkmark;
+			Place_phone;
             Place_character(1);Place_character(2);Place_character(3).
 
 
@@ -319,13 +384,15 @@ proc Place_machine(n:MachineNumber) =
         FreeMachine(1,1);
         UseMachine(2,1);
         FreeMachine(2,1);
-        tell(Done1).
+        tell(Done1);
+		show(checkmark_one,fitnessScene).
 
     Seance2 =
         ReserveMachine(1,2);
         ReserveMachine(3,2);
         (Choice1 || Choice2);
-        tell(Done2).
+        tell(Done2);
+		show(checkmark_two,fitnessScene).
 
     Choice1 =
         GoToQueue(1,2);
@@ -341,7 +408,8 @@ proc Place_machine(n:MachineNumber) =
         ReserveMachine(3,3);
         Choice3;
         FreeMachine(3,3);
-        tell(Done3).
+        tell(Done3);
+		show(checkmark_three,fitnessScene).
 
     Choice3 =
         (GoToQueue(3,3) || UseMachine(3,3)).
