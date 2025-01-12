@@ -18,6 +18,9 @@ scene fitnessScene = {
     croix_one_img = loadImage(Images/croix.png).
     croix_two_img = loadImage(Images/croix.png).
     croix_three_img = loadImage(Images/croix.png).
+    phone_one_img = loadImage(Images/phone.png).
+	phone_two_img = loadImage(Images/phone.png).
+	phone_three_img = loadImage(Images/phone.png).
 
     widget machine_one = {
        display = { machine_one_img }
@@ -63,6 +66,18 @@ scene fitnessScene = {
         display = { croix_three_img }
        init = { wdL = top.}
     }
+    widget phone_one = {
+        display = { phone_one_img }
+       init = { wdL = top.}
+    }
+	widget phone_two = {
+        display = { phone_two_img }
+       init = { wdL = top.}
+    }
+	widget phone_three = {
+        display = { phone_three_img }
+       init = { wdL = top.}
+    }
 }.
 
 proc InitScene = draw_scene(fitnessScene);
@@ -88,7 +103,11 @@ proc InitScene = draw_scene(fitnessScene);
 
                 place_at(croix_one,fitnessScene,machine(1),360);
                 place_at(croix_two,fitnessScene,machine(2),360);
-                place_at(croix_three,fitnessScene,machine(3),360).
+                place_at(croix_three,fitnessScene,machine(3),360);
+
+                place_at(phone_one,fitnessScene,machine(1),300);
+                place_at(phone_two,fitnessScene,machine(2),300);
+                place_at(phone_three,fitnessScene,machine(3),300).
 
     BreakMachine(m:MachineNumber)=
         ((m=1) -> (get(m1);show(croix_one,fitnessScene) ))
@@ -117,21 +136,21 @@ proc InitScene = draw_scene(fitnessScene);
                 (
                     get(m1_q1);move_to(perso_one, fitnessScene, machine(1), 450);tell(q1);
                     get(m1_q2);move_to(perso_one, fitnessScene, machine(1), 400);tell(m1_q1);
-                    get(m1);move_to(perso_one, fitnessScene, machine(1), 360);tell(m1_q2);
+                    get(m1);show(phone_one,fitnessScene);move_to(perso_one, fitnessScene, machine(1), 360);tell(m1_q2);hide(phone_one,fitnessScene);
                     move_to(perso_one, fitnessScene, 100, 500);tell(m1)
                 )
                 +
                 (
                     get(m2_q1);move_to(perso_one, fitnessScene, machine(2), 450);tell(q1);
                     get(m2_q2);move_to(perso_one, fitnessScene, machine(2), 400);tell(m2_q1);
-                    get(m2);move_to(perso_one, fitnessScene, machine(2), 360);tell(m2_q2);
+                    get(m2);show(phone_two,fitnessScene);move_to(perso_one, fitnessScene, machine(2), 360);tell(m2_q2);hide(phone_two,fitnessScene);
                     move_to(perso_one, fitnessScene, 100, 500);tell(m2)
                 )
                 +
                 (
                     get(m3_q1);move_to(perso_one, fitnessScene, machine(3), 450);tell(q1);
                     get(m3_q2);move_to(perso_one, fitnessScene, machine(3), 400);tell(m3_q2);
-                    get(m3);move_to(perso_one, fitnessScene, machine(3), 360);tell(m3_q2);
+                    get(m3);show(phone_three,fitnessScene);move_to(perso_one, fitnessScene, machine(3), 360);tell(m3_q2);hide(phone_three,fitnessScene);
                     move_to(perso_one, fitnessScene, 100, 500);tell(m3)
                 )
             );
@@ -150,21 +169,21 @@ proc InitScene = draw_scene(fitnessScene);
                 (
                     get(m1_q1);move_to(perso_two, fitnessScene, machine(1), 450);tell(q1);
                     get(m1_q2);move_to(perso_two, fitnessScene, machine(1), 400);tell(m1_q1);
-                    get(m1);move_to(perso_two, fitnessScene, machine(1), 360);tell(m1_q2);
+                    get(m1);show(phone_one,fitnessScene);move_to(perso_two, fitnessScene, machine(1), 360);tell(m1_q2);hide(phone_one,fitnessScene);
                     move_to(perso_two, fitnessScene, 75, 500);tell(m1)
                 )
                 +
                 (
                     get(m2_q1);move_to(perso_two, fitnessScene, machine(2), 450);tell(q1);
                     get(m2_q2);move_to(perso_two, fitnessScene, machine(2), 400);tell(m2_q1);
-                    get(m2);move_to(perso_two, fitnessScene, machine(2), 360);tell(m2_q2);
+                    get(m2);show(phone_two,fitnessScene);move_to(perso_two, fitnessScene, machine(2), 360);tell(m2_q2);hide(phone_two,fitnessScene);
                     move_to(perso_two, fitnessScene, 75, 500);tell(m2)
                 )
                 +
                 (
                     get(m3_q1);move_to(perso_two, fitnessScene, machine(3), 450);tell(q1);
                     get(m3_q2);move_to(perso_two, fitnessScene, machine(3), 400);tell(m3_q1);
-                    get(m3);move_to(perso_two, fitnessScene, machine(3), 360);tell(m3_q2);
+                    get(m3);show(phone_three,fitnessScene);move_to(perso_two, fitnessScene, machine(3), 360);tell(m3_q2);hide(phone_three,fitnessScene);
                     move_to(perso_two, fitnessScene, 75, 500);tell(m3)
                 )
             );
@@ -183,21 +202,21 @@ proc InitScene = draw_scene(fitnessScene);
                 (
                     get(m1_q1);move_to(perso_three, fitnessScene, machine(1), 450);tell(q1);
                     get(m1_q2);move_to(perso_three, fitnessScene, machine(1), 400);tell(m1_q1);
-                    get(m1);move_to(perso_three, fitnessScene, machine(1), 360);tell(m1_q2);
+                    get(m1);show(phone_one,fitnessScene);move_to(perso_three, fitnessScene, machine(1), 360);tell(m1_q2);hide(phone_one,fitnessScene);
                     move_to(perso_three, fitnessScene, 50, 500);tell(m1)
                 )
                 +
                 (
                     get(m2_q1);move_to(perso_three, fitnessScene, machine(2), 450);tell(q1);
                     get(m2_q2);move_to(perso_three, fitnessScene, machine(2), 400);tell(m2_q1);
-                    get(m2);move_to(perso_three, fitnessScene, machine(2), 360);tell(m2_q2);
+                    get(m2);show(phone_two,fitnessScene);move_to(perso_three, fitnessScene, machine(2), 360);tell(m2_q2);hide(phone_two,fitnessScene);
                     move_to(perso_three, fitnessScene, 50, 500);tell(m2)
                 )
                 +
                 (
                     get(m3_q1);move_to(perso_three, fitnessScene, machine(3), 450);tell(q1);
                     get(m3_q2);move_to(perso_three, fitnessScene, machine(3), 400);tell(m3_q1);
-                    get(m3);move_to(perso_three, fitnessScene, machine(3), 360);tell(m3_q2);
+                    get(m3);show(phone_three,fitnessScene);move_to(perso_three, fitnessScene, machine(3), 360);tell(m3_q2);show(phone_three,fitnessScene);
                     move_to(perso_three, fitnessScene, 50, 500);tell(m3)
                 )
             );
